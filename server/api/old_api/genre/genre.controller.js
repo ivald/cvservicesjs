@@ -1,6 +1,6 @@
 'use strict';
 
-const models = require('../../models/db');
+const models = require('../../../models/db');
 
 exports.findAllGenre = async (req, res) => {
   const genres = await models.Genre.findAll();

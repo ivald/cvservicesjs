@@ -1,6 +1,6 @@
 'use strict';
 
-const models = require('../../models/db');
+const models = require('../../../models/db');
 
 exports.allBooks = (req, res) => {
   models.Book.findAll()

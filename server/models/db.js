@@ -14,7 +14,7 @@ var db        = {};
 //   var sequelize = new Sequelize(config.database, config.username, config.password, config);
 // }
 
-const sequelize = new Sequelize('bookstore', 'postgres', 'admin', {
+const sequelize = new Sequelize('testdb', 'postgres', 'admin', {
   host: 'localhost',
   dialect: 'postgres',
   port: 5432,

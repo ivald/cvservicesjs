@@ -5,8 +5,8 @@ const jwt = require('jsonwebtoken');
 const Joi = require('joi');
 
 module.exports = (sequelize, DataTypes) => {
-  const UserInfo = sequelize.define('user_info', {
-    user_name: {
+  const User = sequelize.define('User', {
+    name: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
@@ -24,8 +24,19 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     },
-    token: {
+    email: {
       type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: {
+          args: true,
+          msg: "Required"
+        },
+        is: {
+          args: ["\\S+@\\S+\\.\\S+"],
+          msg: "Invalid email"
+        }
+      },
       unique: true
     },
     password: {
@@ -40,21 +51,19 @@ module.exports = (sequelize, DataTypes) => {
           args: [5, 100],
           msg: "String length is not in this range"
         }
-      },
-      unique: true
-    }
-  },{
-    timestamps: false
+      }
+    },
+    isAdmin: DataTypes.BOOLEAN
   });
 
-  // User.associate = (models) => {
-  //   models.User.belongsToMany(models.Book, { as: 'Reading', through: 'ReadingList'});
-  // };
+  User.associate = (models) => {
+    models.User.belongsToMany(models.Book, { as: 'Reading', through: 'ReadingList'});
+  };
 
-  UserInfo.validate = validateUser;
-  UserInfo.generateAuthToken = generateAuthToken;
+  User.validate = validateUser;
+  User.generateAuthToken = generateAuthToken;
 
-  return UserInfo;
+  return User;
 };
 
 function generateAuthToken(id) {

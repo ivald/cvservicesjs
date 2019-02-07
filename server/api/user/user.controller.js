@@ -5,11 +5,26 @@ const _ = require('lodash');
 const models = require('../../models/db');
 
 let UserInfo = models.user_info;
+let Profile = models.profile;
+let Language = models.language;
+let Login = models.login;
+let Role = models.role;
 
 exports.findUserById = async (id) => {
     const user = await UserInfo.findByPk(id, {
+        include: [
+            {  model: Profile,
+                include: [{
+                    model: Language, as: 'languages',
+                }]},
+            {  model: Login, as: 'login',
+                include: [{
+                    model: Role, as: 'roles',
+                }]
+            }
+        ],
         attributes: {
-            exclude: ['password', 'token']
+            exclude: ['password', 'token', 'login_id', 'profile_id']
         }
     });
     return user;

@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
 
   Login.associate = (models) => {
     // models.login.belongsTo(models.user_info, { as: 'userInfoRef',  foreignKey: 'user_info_id' }); // puts foreignKey UserId in Login table
-    models.login.hasMany(models.role, { as: 'roles', foreignKey: 'login' }); // puts foreignKey loginId in Role table
+    models.login.hasMany(models.role, { as: 'role', foreignKey: 'login' }); // puts foreignKey loginId in Role table
   };
 
   Login.validate = validateLogin;

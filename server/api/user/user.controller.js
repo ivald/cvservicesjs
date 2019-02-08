@@ -16,10 +16,13 @@ exports.findUserById = async (id) => {
             {  model: Profile,
                 include: [{
                     model: Language, as: 'languages',
+                    attributes: {
+                        exclude: ['profile_id']
+                    }
                 }]},
             {  model: Login, as: 'login',
                 include: [{
-                    model: Role, as: 'roles',
+                    model: Role, as: 'role',
                 }]
             }
         ],

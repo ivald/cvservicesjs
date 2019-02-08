@@ -9,8 +9,9 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true,
       autoIncrement: true,
     },
-    first_name: {
+    firstName: {
       type: DataTypes.STRING,
+      field: 'first_name',
       allowNull: false,
       validate: {
         notEmpty: {
@@ -27,8 +28,9 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     },
-    last_name: {
+    lastName: {
       type: DataTypes.STRING,
+      field: 'last_name',
       allowNull: false,
       validate: {
         notEmpty: {
@@ -63,8 +65,9 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     },
-    primary_email: {
+    primaryEmail: {
       type: DataTypes.STRING,
+      field: 'primary_email',
       allowNull: true,
       validate: {
         notEmpty: {
@@ -78,18 +81,21 @@ module.exports = (sequelize, DataTypes) => {
       },
       unique: true
     },
-    linked_in_url: {
-      type: DataTypes.STRING
+    linkedInUrl: {
+      type: DataTypes.STRING,
+      field: 'linked_in_url'
     },
     mobile: {
       type: DataTypes.STRING
     },
-    image_url: {
-      type: DataTypes.STRING
+    imageUrl: {
+      type: DataTypes.STRING,
+      field: 'image_url'
     },
     //  private Byte[] imageBytes;
-    public_id: {
-      type: DataTypes.STRING
+    publicId: {
+      type: DataTypes.STRING,
+      field: 'public_id'
     }
   },{
     timestamps: false

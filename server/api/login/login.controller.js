@@ -9,8 +9,11 @@ exports.findLoginById = async (req, res) => {
     const login = await Login.findByPk(req.params.id, {
         include: [{
             model: Role,
-            as: 'roles'
-        }]
+            as: 'role'
+        }],
+        attributes: {
+            exclude: ['profile_id']
+        }
     });
     res.send(login);
 };
@@ -19,7 +22,7 @@ exports.findAll = async (req, res) => {
     const logins = await Login.findAll({
         include: [{
             model: Role,
-            as: 'roles'
+            as: 'role'
         }]
     });
     res.send(logins);

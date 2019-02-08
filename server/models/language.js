@@ -9,8 +9,9 @@ module.exports = (sequelize, DataTypes) => {
             primaryKey: true,
             autoIncrement: true,
         },
-        language_name: {
+        languageName: {
             type: DataTypes.STRING,
+            field: 'language_name',
             allowNull: false,
             validate: {
                 notEmpty: {
@@ -23,8 +24,9 @@ module.exports = (sequelize, DataTypes) => {
                 }
             }
         },
-        language_description: {
+        languageDescription: {
             type: DataTypes.STRING,
+            field: 'language_description',
             allowNull: false,
             validate: {
                 notEmpty: {
@@ -36,6 +38,10 @@ module.exports = (sequelize, DataTypes) => {
                     msg: "Only letters allowed"
                 }
             }
+        },
+        profileId: {
+            type: DataTypes.INTEGER,
+            field: 'profile_id',
         }
     },{
         timestamps: false

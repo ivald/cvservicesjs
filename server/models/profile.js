@@ -88,11 +88,17 @@ module.exports = (sequelize, DataTypes) => {
     mobile: {
       type: DataTypes.STRING
     },
+    github: {
+      type: DataTypes.STRING
+    },
     imageUrl: {
       type: DataTypes.STRING,
       field: 'image_url'
     },
-    //  private Byte[] imageBytes;
+    imageBytes: {
+      type: DataTypes.BLOB,
+      field: 'image_bytes'
+    },
     publicId: {
       type: DataTypes.STRING,
       field: 'public_id'
@@ -102,7 +108,8 @@ module.exports = (sequelize, DataTypes) => {
   });
 
   Profile.associate = (models) => {
-    models.profile.hasMany(models.language, { as: 'languages', foreignKey: 'profile_id' }); // puts foreignKey loginId in Role table
+    models.profile.belongsTo(models.profile_content, {as: 'profileContent', foreignKey: 'profile_content_id' });
+    models.profile.hasMany(models.language, { as: 'languageList', foreignKey: 'profile_id' }); // puts foreignKey loginId in Role table
   };
 
   Profile.validate = validateProfile;

@@ -150,8 +150,37 @@ exports.findUserInfoByName = async (req, res) => {
             exclude: ['password', 'token', 'login_id', 'profile_id']
         }
     });
+
+    user[0].profile.profileContent.experienceList.sort(expCompare);
+    user[0].profile.profileContent.educationList.sort(eduCompare);
+
     res.send(user[0].profile);
 };
+
+function expCompare(o1, o2) {
+    if(!isNanOrNull(o2.toYearOrExpected))
+        return Number(o2.fromYear) - Number(o1.fromYear);
+    else
+        return 1;
+}
+
+function eduCompare(o1, o2) {
+    if(!isNanOrNull(o2.toYearOrExpected)) {
+            if(isNanOrNull(o2.fromYear) || isNanOrNull(o1.fromYear))
+                return -1 ;
+            else
+                return Number(o2.fromYear) - Number(o1.fromYear);
+        } else
+            return -1;
+}
+
+
+function isNanOrNull(element) {
+    if(element == null || element == "undefined" || element == undefined ||  element == "")
+        return true;
+    else
+        return false;
+}
 
 exports.currentUser = (req, res) => {
     res.send(req.user);

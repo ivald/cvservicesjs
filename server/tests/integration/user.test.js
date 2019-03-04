@@ -1,12 +1,12 @@
 process.env.NODE_ENV = 'testing';
 
-const {User} = require('../../../models/user');
+const {User} = require('../../models/user');
 const request = require('supertest');
-const app = require('../../../../server');
+const app = require('../../../server');
 
 describe('/public/', () => {
     beforeEach(async () => {
-        await require('../../../models/db').sequelize.sync();
+        await require('../../models/db').sequelize.sync();
     });
 
     afterEach(() => {

@@ -5,9 +5,15 @@ const jwt = require('jsonwebtoken');
 const Joi = require('joi');
 
 module.exports = (sequelize, DataTypes) => {
-  const User = sequelize.define('User', {
-    name: {
+  const UserInfo = sequelize.define('user_info', {
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+    },
+    userName: {
       type: DataTypes.STRING,
+      field: 'user_name',
       allowNull: false,
       validate: {
         notEmpty: {
@@ -24,19 +30,8 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     },
-    email: {
+    token: {
       type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        notEmpty: {
-          args: true,
-          msg: "Required"
-        },
-        is: {
-          args: ["\\S+@\\S+\\.\\S+"],
-          msg: "Invalid email"
-        }
-      },
       unique: true
     },
     password: {
@@ -51,19 +46,22 @@ module.exports = (sequelize, DataTypes) => {
           args: [5, 100],
           msg: "String length is not in this range"
         }
-      }
-    },
-    isAdmin: DataTypes.BOOLEAN
+      },
+      unique: true
+    }
+  },{
+    timestamps: false
   });
 
-  User.associate = (models) => {
-    models.User.belongsToMany(models.Book, { as: 'Reading', through: 'ReadingList'});
+  UserInfo.associate = (models) => {
+    models.user_info.belongsTo(models.login,  { as: 'login', foreignKey: 'login_id' }); // puts foreignKey UserId in user_info table
+    models.user_info.belongsTo(models.profile, { foreignKey: 'profile_id' }); // puts foreignKey UserId in profile table
   };
 
-  User.validate = validateUser;
-  User.generateAuthToken = generateAuthToken;
+  UserInfo.validate = validateUser;
+  UserInfo.generateAuthToken = generateAuthToken;
 
-  return User;
+  return UserInfo;
 };
 
 function generateAuthToken(id) {
@@ -73,9 +71,8 @@ function generateAuthToken(id) {
 
 function validateUser(user) {
   const schema = {
-    name: Joi.string().min(5).max(50).required(),
-    email: Joi.string().min(5).max(255).required().email(),
-    password: Joi.string().min(5).max(255).required()
+    user_name: Joi.string().min(4).max(32).required().regex(/^[a-z]+$/),
+    password: Joi.string().min(5).max(100).required()
   };
 
   return Joi.validate(user, schema);

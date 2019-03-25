@@ -91,6 +91,9 @@ module.exports = (sequelize, DataTypes) => {
     github: {
       type: DataTypes.STRING
     },
+    docker: {
+      type: DataTypes.STRING
+    },
     imageUrl: {
       type: DataTypes.STRING,
       field: 'image_url'

@@ -8,10 +8,18 @@ let env       = process.env.NODE_ENV || 'development';
 let config    = require('../../config/config.js')[env];
 let db        = {};
 
-const sequelize = new Sequelize(config.database, config.username, config.password, {
-  host: config.host,
-  dialect: config.dialect,
-  port: config.port,
+const sequelize = new Sequelize({
+  username: "hxafmcxavkaamk",
+  password: "cc4e3073f4340087ff7e93c2dee6f222a833aa4474453f18a8253aa24eb888dc",
+  database: "d9qgu7ab7ol5b8",
+  port: 5432,
+  host: "ec2-23-23-110-26.compute-1.amazonaws.com",
+  dialect: "postgres",
+  ssl: true,
+  dialectOptions: {
+    ssl: true,
+    sslfactory: "org.postgresql.ssl.NonValidatingFactory"
+  },
   operatorsAliases: false,
   define: {
     freezeTableName: true

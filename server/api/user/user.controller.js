@@ -1,6 +1,6 @@
 'use strict';
 
-const bcrypt = require('bcrypt');
+//const bcrypt = require('bcrypt');
 const _ = require('lodash');
 const models = require('../../models/db');
 
@@ -203,8 +203,8 @@ exports.addUser = async (req, res) => {
     if (user) return res.status(400).send('UserInfo already registered.');
 
     user = await UserInfo.create(_.pick(req.body, ['name', 'email', 'password']));
-    const salt = await bcrypt.genSalt(10);
-    user.password = await bcrypt.hash(user.password, salt);
+    //const salt = await bcrypt.genSalt(10);
+    //user.password = await bcrypt.hash(user.password, salt);
     user = await user.save();
 
     const token = UserInfo.generateAuthToken(user.id);

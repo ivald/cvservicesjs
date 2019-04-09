@@ -34,6 +34,10 @@ module.exports = (sequelize, DataTypes) => {
     error: {
       type: DataTypes.STRING
     },
+    unread: {
+      type: DataTypes.BOOLEAN,
+      field: 'unread'
+    },
     profileId: {
       type: DataTypes.INTEGER,
       field: 'profile_id',

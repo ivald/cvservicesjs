@@ -112,7 +112,8 @@ module.exports = (sequelize, DataTypes) => {
 
   Profile.associate = (models) => {
     models.profile.belongsTo(models.profile_content, {as: 'profileContent', foreignKey: 'profile_content_id' });
-    models.profile.hasMany(models.language, { as: 'languageList', foreignKey: 'profile_id' }); // puts foreignKey loginId in Role table
+    models.profile.hasMany(models.language, { as: 'languageList', foreignKey: 'profile_id' }); // puts foreignKey profileId in Language table
+    models.profile.hasMany(models.email_me, { as: 'emailMeList', foreignKey: 'profileId' }); // puts foreignKey profileId in EmailMe table
   };
 
   Profile.validate = validateProfile;

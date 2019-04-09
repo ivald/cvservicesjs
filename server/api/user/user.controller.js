@@ -158,7 +158,7 @@ exports.findUserByName = async (name) => {
 };
 
 exports.findUserInfoByName = async (req, res) => {
-  const user = await this.findUserByName(req.param('name'));
+  const user = await this.findUserByName(req.params.name);
   res.send(user);
 };
 

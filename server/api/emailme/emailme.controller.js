@@ -29,7 +29,15 @@ exports.updateUnreadFlag = async (req, res) => {
 
     email.updateAttributes({
         unread: false
-    }).then( (status) => {
+    }).then( () => {
         res.send(new EmailMe());
+    });
+};
+
+exports.selectUnreadEmails = async (req, res) => {
+    await EmailMe.sequelize.query('SELECT count(*) FROM email_me WHERE unread = true and profile_id = ?',
+        { replacements: [req.params.id], type: EmailMe.sequelize.QueryTypes.SELECT }
+    ).then(result => {
+        res.send(result);
     });
 };

@@ -9,9 +9,9 @@ let Image = models.image;
 
 exports.createPdf = async (req, res) => {
 
-  let profile = await userController.findUserByName(req.param('name'));
+  let user = await userController.findUserByName(req.param('name'));
 
-  let docDefinition = createPdfContent(profile);
+  let docDefinition = createPdfContent(user.profile);
 
   createPdfBinary(docDefinition, function(binary) {
     let image = new Image();

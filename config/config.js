@@ -6,7 +6,8 @@ module.exports = {
     host: 'localhost',
     dialect: 'postgres',
     port: '5432',
-    server_port: 3000
+    server_port: 3000,
+    jwt_secret_key: process.env.SECRET_KEY
   },
   testing: {
     username: 'postgres',
@@ -15,7 +16,8 @@ module.exports = {
     host: 'localhost',
     dialect: 'postgres',
     port: '5432',
-    server_port: 3030
+    server_port: 3030,
+    jwt_secret_key: process.env.SECRET_KEY
   },
   production: {
     username: process.env.DB_USERNAME,
@@ -23,7 +25,8 @@ module.exports = {
     database: process.env.DB_NAME,
     host: process.env.DB_HOSTNAME,
     dialect: 'postgres',
-    port: '5432'
+    port: '5432',
+    jwt_secret_key: process.env.SECRET_KEY
   },
   ports: {
     client_port: 9090,

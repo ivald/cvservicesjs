@@ -105,6 +105,11 @@ module.exports = (sequelize, DataTypes) => {
     publicId: {
       type: DataTypes.STRING,
       field: 'public_id'
+    },
+    role: {
+      type: DataTypes.VIRTUAL,
+      allowNull: true,
+      field: 'role'
     }
   },{
     timestamps: false

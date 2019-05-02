@@ -1,5 +1,6 @@
 'use strict';
 
+const _ = require('lodash');
 const models = require('../../models/db');
 
 let EmailMe = models.email_me;
@@ -40,4 +41,29 @@ exports.selectUnreadEmails = async (req, res) => {
     ).then(result => {
         res.send(result);
     });
+};
+
+exports.addEmail = async (req, res) => {
+    let emailRes = new EmailMe();
+
+    try {
+        const {error} = EmailMe.validate(req.body);
+        if (error) return res.status(400).send(error.details[0].message);
+
+        let email = EmailMe.build(_.pick(req.body, ['name', 'email', 'message', 'profileId']));
+
+        let ids = await EmailMe.sequelize.query('SELECT max(id)+1 as id FROM email_me',
+            {type: EmailMe.sequelize.QueryTypes.SELECT}
+        ).then(result => result);
+
+        email.id = ids[0].id;
+
+        await email.save();
+
+        emailRes.message = 'Your message has been sent.';
+    } catch (e) {
+        emailRes.message = 'Your message has not been sent';
+    }
+
+    res.send(emailRes);
 };

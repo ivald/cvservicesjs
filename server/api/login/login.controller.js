@@ -1,7 +1,9 @@
 'use strict';
+const userController = require('../user/user.controller');
 
 const models = require('../../models/db');
 
+let UserInfo = models.user_info;
 let Login = models.login;
 let Role = models.role;
 
@@ -26,4 +28,11 @@ exports.findAll = async (req, res) => {
         }]
     });
     res.send(logins);
+};
+
+exports.login = async (req, res) => {
+    const user = await userController.findUserByName(req.body.userName);
+    const token = UserInfo.generateAuthToken(user.userName);
+    user.token = token;
+    res.send(user);
 };

@@ -1,6 +1,7 @@
 'use strict';
 
-const config = require('config');
+let env       = process.env.NODE_ENV || 'development';
+let config    = require('../../config/config.js')[env];
 const jwt = require('jsonwebtoken');
 const Joi = require('joi');
 
@@ -64,8 +65,8 @@ module.exports = (sequelize, DataTypes) => {
   return UserInfo;
 };
 
-function generateAuthToken(id) {
-  const token = jwt.sign({ id: id, isAdmin: this.isAdmin }, config.get('jwtPrivateKey'));
+function generateAuthToken(name) {
+  const token = jwt.sign({ sub: name}, config.jwt_secret_key, {expiresIn: '30m'}, { algorithm: 'HS256' });
   return token;
 }
 

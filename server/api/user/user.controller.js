@@ -85,6 +85,12 @@ exports.findUserInfoById = async (req, res) => {
     res.send(user);
 };
 
+exports.getProfile = async (req, res) => {
+    let profile = req.user.profile;
+    profile.role = req.user.login.role[0];
+    res.send(profile);
+};
+
 exports.findUserByName = async (name) => {
     const user = await UserInfo.findAll({
         where: {
@@ -154,12 +160,12 @@ exports.findUserByName = async (name) => {
     user[0].profile.profileContent.experienceList.sort(expCompare);
     user[0].profile.profileContent.educationList.sort(eduCompare);
 
-    return user[0].profile;
+    return user[0];
 };
 
 exports.findUserInfoByName = async (req, res) => {
   const user = await this.findUserByName(req.params.name);
-  res.send(user);
+  res.send(user.profile);
 };
 
 function expCompare(o1, o2) {

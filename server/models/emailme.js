@@ -21,7 +21,7 @@ module.exports = (sequelize, DataTypes) => {
           msg: "Required"
         },
         is: {
-          args: ["\\S+@\\S+\\.\\S+"],
+          args: ["^\\w+([\\.-]?\\w+)*@\\w+([\\.-]?\\w+)*(\\.\\w{2,3})+$"],
           msg: "Invalid email"
         }
       },
@@ -29,13 +29,14 @@ module.exports = (sequelize, DataTypes) => {
     },
     message: {
       type: DataTypes.STRING,
-      fields: ['message', {length: 10240}]
+      fields: ['message', {length: 10485760}]
     },
     error: {
       type: DataTypes.STRING
     },
     unread: {
       type: DataTypes.BOOLEAN,
+      defaultValue: true,
       field: 'unread'
     },
     profileId: {
@@ -54,8 +55,10 @@ module.exports = (sequelize, DataTypes) => {
 
 function validateEmailMe(emailMe) {
   const schema = {
-    name: Joi.string().min(4).max(32).required().regex(/^[a-z]+$/),
-    email: Joi.string().min(4).max(32).required().regex(/\\S+@\\S+\\.\\S+"/)
+    name: Joi.string().min(4).max(32).required().regex(/([A-Z])\w+/),
+    email: Joi.string().min(4).max(32).required().regex(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/),
+    message: Joi.string().max(10485760),
+    profileId: Joi.number()
   };
 
   return Joi.validate(emailMe, schema);

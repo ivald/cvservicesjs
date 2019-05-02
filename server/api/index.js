@@ -6,4 +6,5 @@ module.exports = (app) => {
   app.use('/rest/private/email', require('./emailme/emailme.routes'));
   app.use('/rest/public/email', require('./emailme/emailme.routes'));
   app.use('/rest/private/profile', require('./user/user.routes'));
+  app.use('/user', require('./login/login.routes'));
 };

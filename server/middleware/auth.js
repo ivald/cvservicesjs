@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
-const config = require('config');
+let env       = process.env.NODE_ENV || 'development';
+let config    = require('../../config/config.js')[env];
 const userController = require('../api/user/user.controller');
 
 module.exports = async function (req, res, next) {
@@ -11,7 +12,7 @@ module.exports = async function (req, res, next) {
     }
 
     try {
-        const decoded = jwt.decode(token.substring(7), config.get('jwtPrivateKey'));
+        const decoded = jwt.verify(token.substring(7), config.jwt_secret_key);
         const user = await userController.findUserByName(decoded['sub']);
         req.user = user;
         next();

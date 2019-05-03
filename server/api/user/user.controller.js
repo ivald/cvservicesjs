@@ -163,6 +163,21 @@ exports.findUserByName = async (name) => {
     return user[0];
 };
 
+exports.findLoginUserByName = async (name) => {
+    const user = await UserInfo.findAll({
+        where: {
+            userName: name
+        },
+        include: [
+        ],
+        attributes: {
+            exclude: ['login_id', 'profile_id']
+        }
+    });
+
+    return user[0];
+};
+
 exports.findUserInfoByName = async (req, res) => {
   const user = await this.findUserByName(req.params.name);
   res.send(user.profile);

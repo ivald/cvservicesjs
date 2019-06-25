@@ -62,7 +62,7 @@ exports.addEmail = async (req, res) => {
 
         emailRes.message = 'Your message has been sent.';
     } catch (e) {
-        emailRes.message = 'Your message has not been sent';
+        emailRes.error = 'Your message has not been sent';
     }
 
     res.send(emailRes);

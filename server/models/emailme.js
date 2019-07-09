@@ -55,7 +55,7 @@ module.exports = (sequelize, DataTypes) => {
 
 function validateEmailMe(emailMe) {
   const schema = {
-    name: Joi.string().min(4).max(32).required().regex(/([A-Z])\w+/),
+    name: Joi.string().min(4).max(32).required().regex(/([A-Za-z])\w+/),
     email: Joi.string().min(4).max(32).required().regex(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/),
     message: Joi.string().max(10485760),
     profileId: Joi.number()

@@ -56,7 +56,10 @@ exports.addEmail = async (req, res) => {
             {type: EmailMe.sequelize.QueryTypes.SELECT}
         ).then(result => result);
 
-        email.id = ids[0].id;
+        if(ids[0].id == null)
+            email.id = 1;
+        else
+            email.id = ids[0].id;
 
         await email.save();
 
